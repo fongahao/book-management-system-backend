@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { DbModuleOptions } from './db.module'
 import { access, readFile, writeFile } from 'fs/promises'
-import { User } from '../user/entities/user.entity'
+// import { User } from '../user/entities/user.entity'
 @Injectable()
 export class DbService {
   @Inject('OPTIONS')
   private options: DbModuleOptions
 
-  async read() {
+  async read<T>() {
     const filePath = this.options.path
 
     try {
@@ -24,7 +24,7 @@ export class DbService {
       return []
     }
 
-    return JSON.parse(str) as User[]
+    return JSON.parse(str) as T[]
   }
 
   async write(obj: Record<string, any>) {
